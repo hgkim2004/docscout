@@ -1,0 +1,7 @@
+{% extends "layout.html" %}
+
+{% block contents %}
+<p>An online tag cloud creater using <a href="http://konlpy.org">KoNLPy</a>.</p>
+
+{% include "wordcloud.html" with context %}
+{% endblock %}
