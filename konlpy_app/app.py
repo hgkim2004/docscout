@@ -8,6 +8,9 @@ from wordcloud import get_tags
 from settings import SERVER_SETTINGS
 
 
+with open('templates/default.svg', 'r') as f:
+    default_tags = f.read().decode('utf-8')
+
 def create_app():
     app = Flask(__name__)
     app.debug = SERVER_SETTINGS['debug']
@@ -16,7 +19,7 @@ def create_app():
     def home():
         text = kolaw.open('constitution.txt').read()
         return render_template('home.html',\
-               placeholder=text, tags=get_tags(text))
+               placeholder=text, tags=default_tags)
 
     @app.route('/_cloudify')
     def cloudify():

@@ -51,6 +51,7 @@
         </form>
     </div>
     <div id="wordcloud" class="col-md-6 well">
+        {{ tags|safe }}
     </div>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/wordcloud.css') }}">
 </div>
