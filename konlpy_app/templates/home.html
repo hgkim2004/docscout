@@ -8,8 +8,22 @@
 {% block contents %}
 <p>
 텍스트를 입력하면 빈도 높은 명사를 세어 워드 클라우드로 그려줍니다.<br>
-한국어 텍스트 처리에는 KoNLPy가 사용되었습니다.<br>
+한국어 텍스트 처리에는 파이썬 한국어 분석 패키지 <a href="http://konlpy.org">KoNLPy</a>가 사용되었습니다.<br>
 자신만의 텍스트를 입력해서 직접 워드 클라우드를 그려보세요!
 </p>
-{% include "wordcloud.html" with context %}
+
+<div class="row">
+    <div class="col-md-6">
+        <textarea id="wordtext" class="form-control" placeholder="{{ placeholder }}" rows="24"></textarea>
+        <form role="form" id="button-create">
+            <button type="submit" class="btn btn-primary">Create my wordcloud!</button>
+        </form>
+    </div>
+    <div id="wordcloud" class="col-md-6 well">
+        {{ tags|safe }}
+    </div>
+</div>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/wordcloud.css') }}">
+<script type="text/javascript" src="{{ url_for('static', filename='js/wordcloud.js') }}"></script>
 {% endblock %}
