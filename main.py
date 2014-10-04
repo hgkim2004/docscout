@@ -1,6 +1,8 @@
 #! /usr/bin/python2.7
 # -*- coding: utf-8 -*-
 
+import sys; sys.path.insert(0, 'libs')
+
 from konlpy_app.app import create_app
 from werkzeug import DebuggedApplication
 
