@@ -16,13 +16,16 @@ r = lambda: random.randint(0,255)
 color = lambda: (r(), r(), r())
 
 
-def draw_cloud(text, ntags=50, fontname='Noto Sans CJK', multiplier=1):
+def get_tags(text, ntags=50, multiplier=1):
     t = Mecab()
     nouns = t.nouns(text)
     count = Counter(nouns)
     tags = [{ 'color': color(), 'tag': n, 'size': c*multiplier }\
                 for n, c in count.most_common(ntags)]
+    return tags
 
+def draw_cloud(text, ntags=50, fontname='Noto Sans CJK', multiplier=1):
+    tags = get_tags(text)
     data = pytagcloud.create_html_data(tags, fontname=fontname)
 
     context = {}

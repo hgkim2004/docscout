@@ -4,13 +4,16 @@
     <meta charset="utf-8">
     <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/custom.css') }}" rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="{{ url_for('static', filename='js/jquery.min.js') }}">\x3C/script>')</script>
+    <script type="text/javascript">
+        var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    </script>
   </head>
   <body>
     <header>{% include "header.html" %}</header>
     <div class="container">{% block contents %}{% endblock %}</div>
     <footer>{% include "footer.html" %}</footer>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="{{ url_for('static', filename='js/jquery.min.js') }}">\x3C/script>')</script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
   </body>
 </html>

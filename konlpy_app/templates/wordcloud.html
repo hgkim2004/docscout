@@ -1,12 +1,26 @@
+<script type="text/javascript">
+  $(function() {
+    var submit_form = function(e) {
+      $.getJSON($SCRIPT_ROOT + '/_cloudify', {
+        text: $('textarea[id="wordtext"]').val()
+      }, function(data) {
+        $('#wordcloud').html(data.tags);
+        $('textarea[name=wordtext]').focus().select();
+      });
+      return false;
+    };
+    $('form#button-create').bind('click', submit_form);
+  });
+</script>
 <div class="row">
     <div class="col-md-6">
-        <textarea class="form-control" placeholder="{{ placeholder }}" rows="24"></textarea>
+        <textarea id="wordtext" class="form-control" placeholder="{{ placeholder }}" rows="24"></textarea>
         <form role="form" id="button-create">
             <button type="submit" class="btn btn-primary">Create my wordcloud!</button>
         </form>
     </div>
-    <div class="col-md-6 well">
+    <div id="wordcloud" class="col-md-6 well">
         {{ wordcloud|safe }}
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/wordcloud.css') }}">
     </div>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/wordcloud.css') }}">
 </div>
