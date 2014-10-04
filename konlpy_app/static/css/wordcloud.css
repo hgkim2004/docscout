@@ -9,6 +9,10 @@ li.cnt {
     display: block;    
 }
 
+text:hover {
+    opacity: 0.7;
+}
+
 ul.cloud {
     position: relative;
     display: block;

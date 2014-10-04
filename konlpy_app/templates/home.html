@@ -1,12 +1,15 @@
 {% extends "layout.html" %}
 
-{% block contents %}
+{% block extra_headers %}
+<script type="text/javascript" src="{{ url_for('static', filename='js/d3.v3.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/d3.layout.cloud.js') }}"></script>
+{% endblock %}
 
+{% block contents %}
 <p>
 텍스트를 입력하면 빈도 높은 명사를 세어 워드 클라우드로 그려줍니다.<br>
 한국어 텍스트 처리에는 KoNLPy가 사용되었습니다.<br>
 자신만의 텍스트를 입력해서 직접 워드 클라우드를 그려보세요!
 </p>
-
 {% include "wordcloud.html" with context %}
 {% endblock %}

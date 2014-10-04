@@ -4,7 +4,7 @@
 from flask import Flask, jsonify, render_template, redirect, request, url_for
 from konlpy.corpus import kolaw
 
-from wordcloud import draw_cloud
+from wordcloud import get_tags
 from settings import SERVER_SETTINGS
 
 
@@ -16,14 +16,12 @@ def create_app():
     def home():
         text = kolaw.open('constitution.txt').read()
         return render_template('home.html',\
-               placeholder=text,
-               wordcloud=draw_cloud(text))
+               placeholder=text, tags=get_tags(text))
 
     @app.route('/_cloudify')
     def cloudify():
         text = request.args.get('text', '', type=unicode)
-        tags = draw_cloud(text)
-        return jsonify(tags=tags)
+        return jsonify(tags=get_tags(text))
 
     return app
 
