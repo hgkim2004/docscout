@@ -46,4 +46,5 @@ def create_app():
 
 if __name__ == '__main__':
     app = create_app()
-    app.run(SERVER_SETTINGS['host'], SERVER_SETTINGS['port'])
+    port = int(os.environ.get('PORT', SERVER_SETTINGS['port']))
+    app.run(SERVER_SETTINGS['host'], port)
