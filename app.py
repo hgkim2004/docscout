@@ -1,8 +1,6 @@
 #! /usr/bin/python2.7
 # -*- coding: utf-8 -*-
 
-import sys; sys.path.insert(0, 'libs')
-
 from collections import Counter
 import os
 
