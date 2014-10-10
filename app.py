@@ -16,13 +16,13 @@ with open('%s/templates/default.svg' % HERE, 'r') as f:
     default_tags = f.read().decode('utf-8')
 
 
-def get_tags(text, ntags=50):
+def get_tags(text, minsyl=1, ntags=50):
     t = Hannanum()
     nouns = t.nouns(text)
     count = Counter(nouns)
     multiplier = max(1, 100 / count.most_common(1)[0][1])
     tags = [{ 'text': n, 'size': c*multiplier }\
-                for n, c in count.most_common(ntags)]
+                for n, c in count.most_common(ntags) if len(n)>minsyl]
     return tags
 
 
@@ -38,8 +38,10 @@ def create_app():
 
     @app.route('/_cloudify')
     def cloudify():
+        minsyl = request.args.get('minsyl', 1, type=int)
+        ntags = request.args.get('ntags', 50, type=int)
         text = request.args.get('text', '', type=unicode)
-        return jsonify(tags=get_tags(text))
+        return jsonify(tags=get_tags(text, minsyl, ntags))
 
     return app
 

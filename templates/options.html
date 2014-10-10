@@ -1,0 +1,69 @@
+<div class="row">
+    <div class="col-md-6">
+        <div class="option">
+            <p>폰트</p>
+            <div class="form-group">
+                <select class="form-control">
+                    <option>돋움</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="option">
+            <p>배경색</p>
+            <select class="form-control">
+                <option>Light gray</option>
+                <option>White</option>
+                <option>Black</option>
+            </select>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="option">
+            <p>단어 개수</p>
+            <select id="ntags" class="form-control">
+                {% for i in range(1, 11) %}
+                <option>{{ i*10 }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="option">
+            <p>최소 음절수</p>
+            <select id="minsyl" class="form-control">
+                {% for i in range(1, 4) %}
+                <option>{{ i }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="option">
+            <p>형태소 분석기</p>
+            <select class="form-control">
+                <option>한나눔</option>
+                <option>꼬꼬마</option>
+                <option>MeCab-ko</option>
+            </select>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-9">
+        <div>
+            <form role="form" id="button-create">
+                <button type="submit" class="btn btn-primary btn-lg">Create!</button>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div>
+            <a href="copy" id="copy-dynamic">Copy SVG</a>
+            <a href="download">Download HTML</a>
+        </div>
+    </div>
+</div>
