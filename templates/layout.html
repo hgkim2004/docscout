@@ -13,7 +13,7 @@
   </head>
   <body>
     <header>{% include "header.html" %}</header>
-    <div class="container">{% block contents %}{% endblock %}</div>
+    <div class="container contents">{% block contents %}{% endblock %}</div>
     <footer>{% include "footer.html" %}</footer>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
   </body>

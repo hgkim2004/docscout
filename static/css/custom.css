@@ -11,8 +11,8 @@ textarea:focus::-webkit-input-placeholder {
   color: transparent;
 }
 
-.intro {
-    margin: 20px 0;
+.contents {
+    margin-top: 20px;
 }
 
 .option {

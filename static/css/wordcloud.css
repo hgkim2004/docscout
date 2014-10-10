@@ -13,10 +13,6 @@ text:hover {
     opacity: 0.7;
 }
 
-.main {
-    height: 400px;
-}
-
 #wordcloud {
-    padding: 14px;
+    padding: 29px;
 }

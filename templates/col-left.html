@@ -1,3 +1,12 @@
+<p>텍스트를 입력하면 빈도 높은 명사를 세어 워드 클라우드로 그려줍니다.</p>
+<p>한국어 텍스트 처리에는 <b>파이썬 한국어 분석 패키지 <a href="http://konlpy.org">KoNLPy</a></b>가 사용되었습니다.<br>
+하단에 텍스트를 입력하고 우측의 옵션을 다양하게 바꿔가며 자신만의 워드 클라우드를 직접 그려보세요!</p>
+<p>(Selectable fonts:
+    <span class='hanna'>한나체</span>,
+    <span class='kopub-batang'>코펍 바탕체</span>,
+    <span class='nanum-brush-script'>나눔 브러시 스크립트체</span>)
+</p>
+<hr>
 <div class="row">
     <div class="col-md-6">
         <div class="option">
@@ -54,18 +63,7 @@
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-9">
-        <div>
-            <form role="form" id="button-create">
-                <button type="submit" class="btn btn-primary btn-lg">Create!</button>
-            </form>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div>
-            <a href="copy" id="copy-dynamic">Copy SVG</a>
-            <a href="download">Download HTML</a>
-        </div>
-    </div>
-</div>
+<textarea id="wordtext" class="form-control" rows="10">{{ text }}</textarea>
+<form role="form" id="button-create">
+    <button type="submit" class="btn btn-primary btn-lg">Create!</button>
+</form>
