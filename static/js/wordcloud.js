@@ -18,7 +18,14 @@ $(function() {
         .fontSize(function(d) { return d.size; })
         .on("end", draw)
         .start();
+
+      var bgcolor = $('select[id="bgcolor"] option:selected').val();
+      var style = document.createElement('style');
+      style.type = 'text/css';
+      style.innerHTML = "div#wordcloud { background-color: " + bgcolor + "; }";
+      document.getElementById('wordcloud').appendChild(style);
     });
+
     return false;
   };
   $('form#button-create').bind('click', submit_form);
@@ -40,6 +47,6 @@ $(function() {
         .attr("transform", function(d) {
           return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
         })
-        .text(function(d) { return d.text; });
+      .text(function(d) { return d.text; });
   }
 });
