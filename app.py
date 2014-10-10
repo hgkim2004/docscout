@@ -19,11 +19,10 @@ with open('%s/templates/default.svg' % HERE, 'r') as f:
 def get_tags(text, minsyl=1, ntags=50):
     t = Hannanum()
     nouns = t.nouns(text)
-    count = Counter(nouns)
-    multiplier = max(1, 100 / count.most_common(1)[0][1])
-    tags = [{ 'text': n, 'size': c*multiplier }\
-                for n, c in count.most_common(ntags) if len(n)>minsyl]
-    return tags
+    count = sorted(((k, v) for k, v in Counter(nouns).iteritems() if v>=minsyl),
+            key=lambda x: x[1], reverse=True)
+    multiplier = max(1, 100 / count[0][1])
+    return [{ 'text': n, 'size': c*multiplier } for n, c in count[:ntags]]
 
 
 def create_app():
@@ -32,9 +31,9 @@ def create_app():
 
     @app.route('/')
     def home():
-        text = kolaw.open('constitution.txt').read()
+        default_text= kolaw.open('constitution.txt').read()
         return render_template('home.html',\
-               placeholder=text, tags=default_tags)
+               text=default_text, tags=default_tags)
 
     @app.route('/_cloudify')
     def cloudify():

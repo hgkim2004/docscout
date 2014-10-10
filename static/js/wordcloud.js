@@ -5,7 +5,7 @@ $(function() {
 
   var submit_form = function(e) {
     $.getJSON($SCRIPT_ROOT + '/_cloudify', {
-      minsyl: $('select[id="minsyl"] option:selected"]').val(),
+      minsyl: $('select[id="minsyl"] option:selected').val(),
       ntags: $('select[id="ntags"] option:selected').val(),
       text: $('textarea[id="wordtext"]').val()
     }, function(data) {

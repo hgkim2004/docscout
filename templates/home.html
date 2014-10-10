@@ -20,7 +20,9 @@
 </div>
 <div class="row main">
     <div class="col-md-6">
-        <textarea id="wordtext" class="form-control" rows="26">{{ placeholder }}</textarea>
+        <textarea id="wordtext" class="form-control" rows="26">
+            {{ text }}
+        </textarea>
     </div>
     <div id="wordcloud" class="col-md-6 well">
         {{ tags|safe }}
