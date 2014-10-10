@@ -1,17 +1,37 @@
 {% extends "layout.html" %}
 
 {% block extra_headers %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/hanna.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/kopubbatang.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/nanumbrushscript.css') }}">
 <script type="text/javascript" src="{{ url_for('static', filename='js/d3.v3.min.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/d3.layout.cloud.js') }}"></script>
+<style>
+  .hanna { font-family: hanna; }
+  .kopub-batang { font-family: kopub batang; }
+  .nanum-brush-script{ font-family: nanum brush script; }
+</style>
 {% endblock %}
 
 {% block contents %}
 <div class="intro">
     <div class="row intro">
-        <div class="col-md-6">
-        텍스트를 입력하면 빈도 높은 명사를 세어 워드 클라우드로 그려줍니다.<br>
-        한국어 텍스트 처리에는 파이썬 한국어 분석 패키지 <a href="http://konlpy.org">KoNLPy</a>가 사용되었습니다.<br>
-    자신만의 텍스트를 입력해서 직접 워드 클라우드를 그려보세요!
+        <div class="col-md-6 row">
+            <p>텍스트를 입력하면 빈도 높은 명사를 세어 워드 클라우드로 그려줍니다.</p>
+            <p>한국어 텍스트 처리에는 <b>파이썬 한국어 분석 패키지 <a href="http://konlpy.org">KoNLPy</a></b>가 사용되었습니다.<br>
+            하단에 텍스트를 입력하고 우측의 옵션을 다양하게 바꿔가며 자신만의 워드 클라우드를 직접 그려보세요!</p>
+            <hr>
+            <div class="col-md-10 row">
+                <b>Selectable fonts:</b>
+                <ul>
+                    <li><span class='hanna'>한나체</span>
+                    <li><span class='kopub-batang'>코펍 바탕체</span>
+                    <li><span class='nanum-brush-script'>나눔 브러시 스크립트체</span>
+                </ul>
+            </div>
+            <div class="col-md-2 row">
+                <img width="70px" src="{{ url_for('static', filename='images/arrow.png') }}">
+            </div>
         </div>
         <div class="col-md-6">
         {% include "options.html" %}

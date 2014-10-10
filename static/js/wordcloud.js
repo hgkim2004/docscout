@@ -14,15 +14,15 @@ $(function() {
         .words(data.tags)
         .padding(5)
         .rotate(function() { return ~~(Math.random() * 2) * 90; })
-        .font("Impact")
         .fontSize(function(d) { return d.size; })
         .on("end", draw)
         .start();
 
       var bgcolor = $('select[id="bgcolor"] option:selected').val();
+      var font = $('select[id="custom-font"] option:selected').val();
       var style = document.createElement('style');
       style.type = 'text/css';
-      style.innerHTML = "div#wordcloud { background-color: " + bgcolor + "; }";
+      style.innerHTML = "div#wordcloud { background-color: " + bgcolor + "; } div#wordcloud text { font-family: " + font + "; }";
       document.getElementById('wordcloud').appendChild(style);
     });
 
@@ -41,7 +41,6 @@ $(function() {
         .data(words)
       .enter().append("text")
         .style("font-size", function(d) { return d.size + "px"; })
-        .style("font-family", "Impact")
         .style("fill", function(d, i) { return fill(i); })
         .attr("text-anchor", "middle")
         .attr("transform", function(d) {
