@@ -17,7 +17,10 @@ with open('%s/templates/default.svg' % HERE, 'r') as f:
 
 
 def get_tags(text, minsyl=1, ntags=50, tagger='Hannanum'):
-    nouns = globals()[tagger]().nouns(text)
+    if tagger:
+        nouns = globals()[tagger]().nouns(text)
+    else:
+        nouns = text.split()
     count = sorted(((k, v) for k, v in Counter(nouns).iteritems() if len(k)>=minsyl),
             key=lambda x: x[1], reverse=True)
     print count
