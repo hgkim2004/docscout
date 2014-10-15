@@ -3,10 +3,12 @@
 
 from collections import Counter
 import os
+import time
 
 from flask import Flask, jsonify, render_template, redirect, request, url_for
 from konlpy.corpus import kolaw
 from konlpy.tag import Hannanum, Kkma, Mecab
+import regex
 
 from settings import SERVER_SETTINGS
 
@@ -20,10 +22,11 @@ def get_tags(text, minsyl=1, ntags=50, tagger='Hannanum'):
     if tagger:
         nouns = globals()[tagger]().nouns(text)
     else:
-        nouns = text.split()
-    count = sorted(((k, v) for k, v in Counter(nouns).iteritems() if len(k)>=minsyl),
+        nouns = regex.findall(ur'[\p{Hangul}|\p{Latin}|\p{Han}]+', text)
+
+    count = sorted(\
+            ((k, v) for k, v in Counter(nouns).iteritems() if len(k)>=minsyl),\
             key=lambda x: x[1], reverse=True)
-    print count
     multiplier = max(1, 100 / count[0][1])
     return [{ 'text': n, 'size': c*multiplier } for n, c in count[:ntags]]
 
@@ -36,7 +39,7 @@ def create_app():
     def home():
         default_text= kolaw.open('constitution.txt').read()
         return render_template('home.html',\
-               text=default_text, tags=default_tags)
+               text=default_text, tags=get_tags(default_text, 1, 10, None))
 
     @app.route('/_cloudify')
     def cloudify():
@@ -44,7 +47,9 @@ def create_app():
         ntags = request.args.get('ntags', 50, type=int)
         tagger = request.args.get('tagger', 'Hannanum', type=unicode)
         text = request.args.get('text', '', type=unicode)
-        return jsonify(tags=get_tags(text, minsyl, ntags, tagger))
+        s = time.clock()
+        tags = get_tags(text, minsyl, ntags, tagger)
+        return jsonify(tags=tags, time=time.clock()-s, textlen=len(text))
 
     return app
 

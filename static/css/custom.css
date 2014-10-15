@@ -15,6 +15,10 @@ textarea:focus::-webkit-input-placeholder {
     margin-top: 20px;
 }
 
+.inline {
+    display: inline-block;
+}
+
 .option {
     margin-bottom: 30px;
 }
@@ -29,4 +33,12 @@ textarea:focus::-webkit-input-placeholder {
 
 #button-create button {
   width: 100%;
+}
+
+#info span {
+    margin-right: 10px;
+}
+
+#wordcloud {
+    height: 565px;
 }

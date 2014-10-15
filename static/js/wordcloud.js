@@ -18,16 +18,23 @@ $(function() {
         .on("end", draw)
         .start();
 
+      $("#info").empty();
+      var info = d3.select("#info");
+      info.append("span").text("Time: " + Math.round(data.time*100)/100 + "s");
+      info.append("span").text("Text length: " + data.textlen);
+
       var bgcolor = $('select[id="bgcolor"] option:selected').val();
       var font = $('select[id="custom-font"] option:selected').val();
       var style = document.createElement('style');
       style.type = 'text/css';
       style.innerHTML = "div#wordcloud { background-color: " + bgcolor + "; } div#wordcloud text { font-family: " + font + "; }";
       document.getElementById('wordcloud').appendChild(style);
+
     });
 
     return false;
   };
+
   $('form#button-create').bind('click', submit_form);
 
   function draw(words) {
