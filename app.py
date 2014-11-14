@@ -39,7 +39,7 @@ def create_app():
     def home():
         default_text= kolaw.open('constitution.txt').read()
         return render_template('home.html',\
-               text=default_text, tags=get_tags(default_text, 1, 10, None))
+               text=default_text, tags=default_tags)
 
     @app.route('/_cloudify')
     def cloudify():
