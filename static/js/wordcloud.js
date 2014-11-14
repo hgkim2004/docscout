@@ -7,13 +7,14 @@ $(function() {
     $.getJSON($SCRIPT_ROOT + '/_cloudify', {
       minsyl: $('select[id="minsyl"] option:selected').val(),
       ntags: $('select[id="ntags"] option:selected').val(),
+      rotated: $('select[id="rotated"] option:selected').val(),
       tagger : $('select[id="tagger"] option:selected').val(),
       text: $('textarea[id="wordtext"]').val()
     }, function(data) {
       d3.layout.cloud().size([width, height])
         .words(data.tags)
         .padding(5)
-        .rotate(function() { return ~~(Math.random() * 2) * 90; })
+        .rotate(function() { return ~~(Math.random() * 2) * 90 * data.rotated; })
         .fontSize(function(d) { return d.size; })
         .on("end", draw)
         .start();

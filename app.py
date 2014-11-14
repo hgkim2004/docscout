@@ -45,11 +45,15 @@ def create_app():
     def cloudify():
         minsyl = request.args.get('minsyl', 1, type=int)
         ntags = request.args.get('ntags', 50, type=int)
+        rotated = request.args.get('rotated', 1, type=int)
         tagger = request.args.get('tagger', 'Hannanum', type=unicode)
         text = request.args.get('text', '', type=unicode)
         s = time.clock()
         tags = get_tags(text, minsyl, ntags, tagger)
-        return jsonify(tags=tags, time=time.clock()-s, textlen=len(text))
+        return jsonify(rotated=rotated,
+                       tags=tags,
+                       time=time.clock()-s,
+                       textlen=len(text))
 
     return app
 
