@@ -18,15 +18,19 @@ with open('%s/templates/default.svg' % HERE, 'r') as f:
     default_tags = f.read().decode('utf-8')
 
 
-def get_tags(text, minsyl=1, ntags=50, tagger='Hannanum'):
+def get_tags(text, minsyl=1, ntags=10, tagger='Hannanum', posnv='N'):
     if tagger:
-        nouns = globals()[tagger]().nouns(text)
+        # FIXME: count가 맞지 않음
+        tags = globals()[tagger]().pos(text)
+        filtered = [t for t in tags if t[1][0] in posnv]
+        words = [w + u'다' if t[0] in 'VP' else w for w, t in filtered]
     else:
-        nouns = regex.findall(ur'[\p{Hangul}|\p{Latin}|\p{Han}]+', text)
+        words = regex.findall(ur'[\p{Hangul}|\p{Latin}|\p{Han}]+', text)
 
     count = sorted(\
-            ((k, v) for k, v in Counter(nouns).iteritems() if len(k)>=minsyl),\
+            ((k, v) for k, v in Counter(words).iteritems() if len(k)>=minsyl),\
             key=lambda x: x[1], reverse=True)
+
     multiplier = max(1, 100 / count[0][1])
     return [{ 'text': n, 'size': c*multiplier } for n, c in count[:ntags]]
 
@@ -44,16 +48,19 @@ def create_app():
     @app.route('/_cloudify')
     def cloudify():
         minsyl = request.args.get('minsyl', 1, type=int)
-        ntags = request.args.get('ntags', 50, type=int)
+        ntags = request.args.get('ntags', 10, type=int)
         rotated = request.args.get('rotated', 1, type=int)
         tagger = request.args.get('tagger', 'Hannanum', type=unicode)
         text = request.args.get('text', '', type=unicode)
+        posnv = request.args.get('posnv', 'NPV', type=unicode)
         s = time.clock()
-        tags = get_tags(text, minsyl, ntags, tagger)
+        tags = get_tags(text, minsyl, ntags, tagger, posnv)
         return jsonify(rotated=rotated,
                        tags=tags,
                        time=time.clock()-s,
-                       textlen=len(text))
+                       textlen=len(text),
+                       posnv=posnv,
+                       ntags=len(tags))
 
     return app
 

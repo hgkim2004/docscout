@@ -73,6 +73,23 @@
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-md-12 option">
+        <!-- TODO: disable checkboxes if tagger is not used -->
+        <p>품사</p>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" id="noun" name="noun" value="N" checked> 체언 (N)
+            </label>
+            <label>
+                <input type="checkbox" id="verb" name="verb" value="VP" checked> 용언 (V)
+            </label>
+            <label>
+                <input type="checkbox" id="others" name="others" value="1" disabled> 기타 (O)
+            </label>
+        </div>
+    </div>
+</div>
 <textarea id="wordtext" class="form-control" rows="10">{{ text }}</textarea>
 <form role="form" id="button-create">
     <button type="submit" class="btn btn-primary btn-lg">Create!</button>

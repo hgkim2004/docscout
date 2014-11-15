@@ -9,7 +9,9 @@ $(function() {
       ntags: $('select[id="ntags"] option:selected').val(),
       rotated: $('select[id="rotated"] option:selected').val(),
       tagger : $('select[id="tagger"] option:selected').val(),
-      text: $('textarea[id="wordtext"]').val()
+      text: $('textarea[id="wordtext"]').val(),
+      posnv: ($('input[id="noun"]:checked').val() || '') +
+             ($('input[id="verb"]:checked').val() || '')
     }, function(data) {
       d3.layout.cloud().size([width, height])
         .words(data.tags)
@@ -23,6 +25,8 @@ $(function() {
       var info = d3.select("#info");
       info.append("span").text("Time: " + Math.round(data.time*100)/100 + "s");
       info.append("span").text("Text length: " + data.textlen);
+      info.append("span").text("POS: " + data.posnv);
+      info.append("span").text("ntags: " + data.ntags);
 
       var bgcolor = $('select[id="bgcolor"] option:selected').val();
       var font = $('select[id="custom-font"] option:selected').val();
