@@ -5,10 +5,9 @@ from collections import Counter
 import os
 import time
 
-from flask import Flask, jsonify, Markup, render_template, redirect, request, url_for
+from flask import Flask, jsonify, render_template, redirect, request, url_for
 from konlpy.corpus import kolaw
 from konlpy.tag import Hannanum, Kkma, Mecab
-import markdown
 import regex
 
 from settings import BRAND, SERVER_SETTINGS
