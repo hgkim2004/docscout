@@ -5,12 +5,13 @@ from collections import Counter
 import os
 import time
 
-from flask import Flask, jsonify, render_template, redirect, request, url_for
+from flask import Flask, jsonify, Markup, render_template, redirect, request, url_for
 from konlpy.corpus import kolaw
 from konlpy.tag import Hannanum, Kkma, Mecab
+import markdown
 import regex
 
-from settings import SERVER_SETTINGS
+from settings import BRAND, SERVER_SETTINGS
 
 
 HERE = os.path.abspath(os.path.dirname(__file__))
@@ -47,6 +48,10 @@ def create_app():
         return render_template('home.html',\
                text=default_text, tags=default_tags)
 
+    @app.route('/faq')
+    def faq():
+        return render_template('faq.html')
+
     @app.route('/_cloudify')
     def cloudify():
         minsyl = request.args.get('minsyl', 1, type=int)
@@ -64,6 +69,10 @@ def create_app():
                        textlen=len(text),
                        posnv=posnv,
                        ntags=len(tags))
+
+    @app.context_processor
+    def inject_vars():
+        return dict(BRAND=BRAND)
 
     return app
 

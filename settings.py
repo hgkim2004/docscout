@@ -8,3 +8,5 @@ SERVER_SETTINGS = {
     'port': 5000,
     'debug': True,
 }
+
+BRAND = 'KoNLPy online'
