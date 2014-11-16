@@ -15,6 +15,15 @@ textarea:focus::-webkit-input-placeholder {
     margin-top: 20px;
 }
 
+.glyphicon {
+    color: #aaa;
+    margin-left: 5px;
+}
+
+.glyphicon:hover {
+    color: #333;
+}
+
 .inline {
     display: inline-block;
 }

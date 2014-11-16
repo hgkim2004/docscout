@@ -60,5 +60,9 @@ $(function() {
           return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
         })
       .text(function(d) { return d.text; });
-  }
+  };
+
+  $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+  });
 });
