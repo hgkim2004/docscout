@@ -9,4 +9,4 @@ SERVER_SETTINGS = {
     'debug': True,
 }
 
-BRAND = 'KoNLPy online'
+BRAND = 'Docscout'
