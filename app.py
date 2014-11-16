@@ -28,6 +28,7 @@ def get_tags(text, minsyl=1, ntags=10, tagger='Hannanum', posnv='N', stopwords=[
     else:
         words = regex.findall(ur'[\p{Hangul}|\p{Latin}|\p{Han}]+', text)
 
+    words = [w.lower() for w in words]
     words = [w for w in words if w not in stopwords]
 
     count = sorted(\
