@@ -18,7 +18,7 @@ with open('%s/templates/default.svg' % HERE, 'r') as f:
     default_tags = f.read().decode('utf-8')
 
 
-def get_tags(text, minsyl=1, ntags=10, tagger='Hannanum', posnv='N'):
+def get_tags(text, minsyl=1, ntags=10, tagger='Hannanum', posnv='N', stopwords=[]):
     if tagger:
         # FIXME: count가 맞지 않음
         tags = globals()[tagger]().pos(text)
@@ -26,6 +26,8 @@ def get_tags(text, minsyl=1, ntags=10, tagger='Hannanum', posnv='N'):
         words = [w + u'다' if t[0] in 'VP' else w for w, t in filtered]
     else:
         words = regex.findall(ur'[\p{Hangul}|\p{Latin}|\p{Han}]+', text)
+
+    words = [w for w in words if w not in stopwords]
 
     count = sorted(\
             ((k, v) for k, v in Counter(words).iteritems() if len(k)>=minsyl),\
@@ -53,8 +55,9 @@ def create_app():
         tagger = request.args.get('tagger', 'Hannanum', type=unicode)
         text = request.args.get('text', '', type=unicode)
         posnv = request.args.get('posnv', 'NPV', type=unicode)
+        stopwords = request.args.get('stopwords', '', type=unicode).split(',')
         s = time.clock()
-        tags = get_tags(text, minsyl, ntags, tagger, posnv)
+        tags = get_tags(text, minsyl, ntags, tagger, posnv, stopwords)
         return jsonify(rotated=rotated,
                        tags=tags,
                        time=time.clock()-s,

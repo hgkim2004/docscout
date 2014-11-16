@@ -10,6 +10,7 @@ $(function() {
       rotated: $('select[id="rotated"] option:selected').val(),
       tagger : $('select[id="tagger"] option:selected').val(),
       text: $('textarea[id="wordtext"]').val(),
+      stopwords: $('textarea[id="stopwords"]').val(),
       posnv: ($('input[id="noun"]:checked').val() || '') +
              ($('input[id="verb"]:checked').val() || '')
     }, function(data) {
