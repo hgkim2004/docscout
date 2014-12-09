@@ -23,7 +23,8 @@ def get_tags(text, minsyl=1, ntags=10, tagger='Hannanum', posnv='N', stopwords=[
         # FIXME: count가 맞지 않음
         tags = globals()[tagger]().pos(text)
         filtered = [t for t in tags if t[1][0] in posnv]
-        words = [w + u'다' if t[0] in 'VP' else w for w, t in filtered]
+        words = [w + u'다' if t[0] in 'VP' and not w.endswith(u'다') else w\
+                for w, t in filtered]
     else:
         words = regex.findall(ur'[\p{Hangul}|\p{Latin}|\p{Han}]+', text)
 
