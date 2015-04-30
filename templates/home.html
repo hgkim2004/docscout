@@ -89,6 +89,16 @@ $(document).ready(function(){
     checkboxes.click(function() {
         submitButt.attr("disabled", !checkboxes.is(":checked"));
     });
+
+    // disable checkboxes if no tagger is selected
+    var taggerList = document.getElementById("tagger");
+    $("#tagger").change(function() {
+        if (taggerList.options[taggerList.selectedIndex].value=="") {
+            checkboxes.attr("disabled", true);
+        } else {
+            checkboxes.attr("disabled", false);
+        }
+    });
 });
 </script>
 {% endblock %}

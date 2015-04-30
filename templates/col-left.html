@@ -64,7 +64,7 @@
     <div class="col-md-4">
         <div class="option">
             <p>형태소 분석기<span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="bottom" title="형태소 분석기를 사용하지 않으면, 마침표 등의 특수기호만 제외하고 공백을 기준으로 나눕니다."></span></p>
-            <select name="tagger" class="form-control">
+            <select id="tagger" name="tagger" class="form-control">
                 <option value=""{% if request.form.tagger=='' %} selected{% endif %}>사용하지 않음</option>
                 <option value="Hannanum"{% if request.form.tagger=='Hannanum' %} selected{% endif %}>한나눔</option>
                 <option value="Kkma"{% if request.form.tagger=='Kkma' %} selected{% endif %}>꼬꼬마</option>
@@ -79,10 +79,10 @@
         <p>품사</p>
         <div class="checkbox">
             <label>
-                <input type="checkbox" id="noun" name="noun" value="N"{% if request.form.noun %} checked{% endif %}> 체언 (N)
+                <input type="checkbox" id="noun" name="noun" value="N"{% if request.form.noun  or init %} checked{% endif %}{% if init %} disabled{% endif %}> 체언 (N)
             </label>
             <label>
-                <input type="checkbox" id="verb" name="verb" value="VP"{% if request.form.verb %} checked{% endif %}> 용언 (V)
+                <input type="checkbox" id="verb" name="verb" value="VP"{% if request.form.verb or init %} checked{% endif %}{% if init %} disabled{% endif %}> 용언 (V)
             </label>
         </div>
     </div>

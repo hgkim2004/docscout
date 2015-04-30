@@ -22,7 +22,6 @@ def get_tags(text, minsyl=1, ntags=10, tagger='', posnv='N', stopwords=[]):
     if tagger:
         # FIXME: count가 맞지 않음
         tags = globals()[tagger]().pos(text)
-        print posnv
         filtered = [t for t in tags if t[1][0] in posnv]
         words = [w + u'다' if t[0] in 'VP' and not w.endswith(u'다') else w\
                 for w, t in filtered]
@@ -49,9 +48,11 @@ def create_app():
         if request.method=='GET':
             text = kolaw.open('constitution.txt').read()
             stopwords = u'그,또는,한다'
+            init = True
         else:
             text = request.form.get('wordtext', type=unicode)
             stopwords = request.form.get('stopwords', type=unicode)
+            init = False
 
         minsyl = request.form.get('minsyl', 1, type=int)
         ntags = request.form.get('ntags', 10, type=int)
@@ -62,6 +63,7 @@ def create_app():
         s = time.clock()
         tags = get_tags(text, minsyl, ntags, tagger, posnv, stopwords.split(','))
         return render_template('home.html',\
+                    init=init,
                     text=text,
                     tags=tags,
                     time=time.clock()-s,
