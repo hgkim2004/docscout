@@ -76,9 +76,18 @@ $(function() {
 <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.zclip.js') }}"></script>
 <script>
 $(document).ready(function(){
+    // add copy svg button
     $("a#copy-dynamic").zclip({
        path: "{{ url_for('static', filename='ZeroClipboard.swf') }}",
        copy: function(){return $("div#wordcloud").html();}
+    });
+
+    // disable submit if no checkboxes are selected
+    var checkboxes = $("input[type='checkbox']"),
+        submitButt = $("button[type='submit']");
+
+    checkboxes.click(function() {
+        submitButt.attr("disabled", !checkboxes.is(":checked"));
     });
 });
 </script>

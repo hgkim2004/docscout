@@ -22,6 +22,7 @@ def get_tags(text, minsyl=1, ntags=10, tagger='', posnv='N', stopwords=[]):
     if tagger:
         # FIXME: count가 맞지 않음
         tags = globals()[tagger]().pos(text)
+        print posnv
         filtered = [t for t in tags if t[1][0] in posnv]
         words = [w + u'다' if t[0] in 'VP' and not w.endswith(u'다') else w\
                 for w, t in filtered]
@@ -55,8 +56,8 @@ def create_app():
         minsyl = request.form.get('minsyl', 1, type=int)
         ntags = request.form.get('ntags', 10, type=int)
         tagger = request.form.get('tagger', '', type=unicode)
-        posnv = request.form.get('noun', 'N', type=unicode)\
-              + request.form.get('verb', 'VP', type=unicode)
+        posnv = request.form.get('noun', '', type=unicode)\
+              + request.form.get('verb', '', type=unicode)
 
         s = time.clock()
         tags = get_tags(text, minsyl, ntags, tagger, posnv, stopwords.split(','))
