@@ -7,15 +7,16 @@
     <span class='nanum-brush-script'>나눔 브러시 스크립트체</span>)
 </p>
 <hr>
+<form role="form" id="button-create" action="/" method="POST">
 <div class="row">
     <div class="col-md-4">
         <div class="option">
             <p>폰트</p>
             <div class="form-group">
-                <select id="custom-font" class="form-control">
-                    <option value="hanna">한나체</option>
-                    <option value="kopub batang">코펍 바탕</option>
-                    <option value="nanum brush script">나눔 브러시 스크립트체</option>
+                <select name="font" class="form-control">
+                    <option value="hanna"{% if request.form.font=='hanna' %} selected{% endif %}>한나체</option>
+                    <option value="kopub batang"{% if request.form.font=='kopub batang' %} selected{% endif %}>코펍 바탕</option>
+                    <option value="nanum brush script"{% if request.form.font=='nanum brush script' %} selected{% endif %}>나눔 브러시 스크립트체</option>
                 </select>
             </div>
         </div>
@@ -23,19 +24,19 @@
     <div class="col-md-4">
         <div class="option">
             <p>배경색</p>
-            <select id="bgcolor" class="form-control">
-                <option value="#f5f5f5">Light gray</option>
-                <option value="#fff">White</option>
-                <option value="#000">Black</option>
+            <select id="bgcolor" name="bgcolor" class="form-control">
+                <option value="#000"{% if request.form.bgcolor=='#000' %} selected{% endif %}>Black</option>
+                <option value="#fff"{% if request.form.bgcolor=='#fff' %} selected{% endif %}>White</option>
+                <option value="#f5f5f5"{% if request.form.bgcolor=='#f5f5f5' %} selected{% endif %}>Light gray</option>
             </select>
         </div>
     </div>
     <div class="col-md-4">
         <div class="option">
             <p>회전</p>
-            <select id="rotated" class="form-control">
-                <option value=1>True</option>
-                <option value=0>False</option>
+            <select name="rotated" class="form-control">
+                <option value=1{% if request.form.rotated=='1' %} selected{% endif %}>True</option>
+                <option value=0{% if request.form.rotated=='0' %} selected{% endif %}>False</option>
             </select>
         </div>
     </div>
@@ -44,19 +45,18 @@
     <div class="col-md-4">
         <div class="option">
             <p>단어 개수</p>
-            <select id="ntags" class="form-control">
-                {% for i in range(1, 11) %}
-                <option>{{ i*10 }}</option>
+            <select name="ntags" class="form-control">
+                {% for i in range(10, 110, 10) %}
+                <option{% if request.form.ntags==i|string() %} selected{% endif %}>{{ i }}</option>
                 {% endfor %}
             </select>
         </div>
     </div>
     <div class="col-md-4">
         <div class="option">
-            <p>최소 음절수</p>
-            <select id="minsyl" class="form-control">
+            <p>최소 음절수</p> <select name="minsyl" class="form-control">
                 {% for i in range(1, 4) %}
-                <option>{{ i }}</option>
+                <option{% if request.form.minsyl==i|string() %} selected{% endif %}>{{ i }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -64,11 +64,11 @@
     <div class="col-md-4">
         <div class="option">
             <p>형태소 분석기<span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="bottom" title="형태소 분석기를 사용하지 않으면, 마침표 등의 특수기호만 제외하고 공백을 기준으로 나눕니다."></span></p>
-            <select id="tagger" class="form-control">
-                <option value="">사용하지 않음</option>
-                <option value="Hannanum">한나눔</option>
-                <option value="Kkma">꼬꼬마</option>
-                <option value="Mecab" disabled>MeCab-ko</option>
+            <select name="tagger" class="form-control">
+                <option value=""{% if request.form.tagger=='' %} selected{% endif %}>사용하지 않음</option>
+                <option value="Hannanum"{% if request.form.tagger=='Hannanum' %} selected{% endif %}>한나눔</option>
+                <option value="Kkma"{% if request.form.tagger=='Kkma' %} selected{% endif %}>꼬꼬마</option>
+                <option value="Mecab"{% if request.form.tagger=='Mecab' %} selected{% endif %}>MeCab-ko</option>
             </select>
         </div>
     </div>
@@ -79,19 +79,18 @@
         <p>품사</p>
         <div class="checkbox">
             <label>
-                <input type="checkbox" id="noun" name="noun" value="N" checked> 체언 (N)
+                <input type="checkbox" id="noun" name="noun" value="N"{% if request.form.noun %} checked{% endif %}> 체언 (N)
             </label>
             <label>
-                <input type="checkbox" id="verb" name="verb" value="VP" checked> 용언 (V)
+                <input type="checkbox" id="verb" name="verb" value="VP"{% if request.form.verb %} checked{% endif %}> 용언 (V)
             </label>
         </div>
     </div>
     <div class="col-md-8 option">
         <p>불용어<span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="bottom" title="불용어(stopwords)는 불용어는 워드클라우드를 그릴 때 제외됩니다."></span></p>
-        <textarea id="stopwords" class="form-control" rows="1">가다,하다</textarea>
+        <textarea name="stopwords" class="form-control" rows="1">{{ stopwords }}</textarea>
     </div>
 </div>
-<textarea id="wordtext" class="form-control" rows="10">{{ text }}</textarea>
-<form role="form" id="button-create">
-    <button type="submit" class="btn btn-primary btn-lg">Create!</button>
+<textarea id="wordtext" name="wordtext" class="form-control" rows="10">{{ text }}</textarea>
+<button type="submit" class="btn btn-primary btn-lg" value="Send">Create!</button>
 </form>

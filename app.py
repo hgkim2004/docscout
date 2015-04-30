@@ -18,7 +18,7 @@ with open('%s/templates/default.svg' % HERE, 'r') as f:
     default_tags = f.read().decode('utf-8')
 
 
-def get_tags(text, minsyl=1, ntags=10, tagger='Hannanum', posnv='N', stopwords=[]):
+def get_tags(text, minsyl=1, ntags=10, tagger='', posnv='N', stopwords=[]):
     if tagger:
         # FIXME: count가 맞지 않음
         tags = globals()[tagger]().pos(text)
@@ -43,33 +43,34 @@ def create_app():
     app = Flask(__name__)
     app.debug = SERVER_SETTINGS['debug']
 
-    @app.route('/')
+    @app.route('/', methods=['GET', 'POST'])
     def home():
-        default_text= kolaw.open('constitution.txt').read()
+        if request.method=='GET':
+            text = kolaw.open('constitution.txt').read()
+            stopwords = u'그,또는,한다'
+        else:
+            text = request.form.get('wordtext', type=unicode)
+            stopwords = request.form.get('stopwords', type=unicode)
+
+        minsyl = request.form.get('minsyl', 1, type=int)
+        ntags = request.form.get('ntags', 10, type=int)
+        tagger = request.form.get('tagger', '', type=unicode)
+        posnv = request.form.get('noun', 'N', type=unicode)\
+              + request.form.get('verb', 'VP', type=unicode)
+
+        s = time.clock()
+        tags = get_tags(text, minsyl, ntags, tagger, posnv, stopwords.split(','))
         return render_template('home.html',\
-               text=default_text, tags=default_tags)
+                    text=text,
+                    tags=tags,
+                    time=time.clock()-s,
+                    textlen=len(text),
+                    stopwords=stopwords,
+                    ntags=len(tags))
 
     @app.route('/faq')
     def faq():
         return render_template('faq.html')
-
-    @app.route('/_cloudify')
-    def cloudify():
-        minsyl = request.args.get('minsyl', 1, type=int)
-        ntags = request.args.get('ntags', 10, type=int)
-        rotated = request.args.get('rotated', 1, type=int)
-        tagger = request.args.get('tagger', 'Hannanum', type=unicode)
-        text = request.args.get('text', '', type=unicode)
-        posnv = request.args.get('posnv', 'NPV', type=unicode)
-        stopwords = request.args.get('stopwords', '', type=unicode).split(',')
-        s = time.clock()
-        tags = get_tags(text, minsyl, ntags, tagger, posnv, stopwords)
-        return jsonify(rotated=rotated,
-                       tags=tags,
-                       time=time.clock()-s,
-                       textlen=len(text),
-                       posnv=posnv,
-                       ntags=len(tags))
 
     @app.context_processor
     def inject_vars():
